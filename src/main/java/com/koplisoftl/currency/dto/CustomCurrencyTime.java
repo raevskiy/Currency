@@ -10,6 +10,14 @@ public class CustomCurrencyTime {
 	@JsonProperty("updatedISO")
 	private Date dateTime;
 	
+	public CustomCurrencyTime() {
+		super();
+	}
+	
+	public CustomCurrencyTime(Date dateTime) {
+		this.dateTime = dateTime;
+	}
+	
 	public Date getDateTime() {
 		return dateTime;
 	}

@@ -10,5 +10,4 @@ import com.koplisoftl.currency.dto.CurrencyConversionRate;
 public interface CurrencyConversionRateMapper {
 	CurrencyConversionRate mapEntityToDto(com.koplisoftl.currency.entity.CurrencyConversionRate currencyConversionRate);
 	List<CurrencyConversionRate> mapeEntitiesToDtos(List<com.koplisoftl.currency.entity.CurrencyConversionRate> currencyConversionRate);
-
 }

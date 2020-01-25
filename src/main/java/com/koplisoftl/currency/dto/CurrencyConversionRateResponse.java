@@ -6,6 +6,10 @@ public class CurrencyConversionRateResponse {
 	private String description;
 	private Collection<CurrencyConversionRate> conversionRates;
 	
+	public CurrencyConversionRateResponse() {
+		super();
+	}
+	
 	public CurrencyConversionRateResponse(String description, Collection<CurrencyConversionRate> conversionRates) {
 		this.description = description;
 		this.conversionRates = conversionRates;

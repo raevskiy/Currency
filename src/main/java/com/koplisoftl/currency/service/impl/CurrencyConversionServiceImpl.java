@@ -26,7 +26,7 @@ public class CurrencyConversionServiceImpl implements CurrencyConversionService 
 		CustomCurrencyPriceIndexResponse response = restTemplate.getForObject(
 				String.format(CUSTOM_CURRENCY_PRICE_INDEX_URL, currency), CustomCurrencyPriceIndexResponse.class);
 		CurrencyConversionRate currencyRate = new CurrencyConversionRate(
-				response.findCurrencyToUsDollarExchangeRate(currency), response.getDateTime());
+				response.findCurrencyToUsDollarExchangeRate(currency), response.extractDateTime());
 		currencyRateDao.insert(currencyRate);
 	}
 

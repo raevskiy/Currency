@@ -1,14 +1,11 @@
 package com.koplisoftl.currency.controller;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.koplisoftl.currency.dto.CurrencyConversionRate;
 import com.koplisoftl.currency.dto.CurrencyConversionRateResponse;
 import com.koplisoftl.currency.mappimg.CurrencyConversionRateMapper;
 import com.koplisoftl.currency.service.CurrencyConversionService;
@@ -28,7 +25,7 @@ public class MainController {
 	}
 
 	@GetMapping(path = "/recent")
-	public @ResponseBody CurrencyConversionRateResponse findEuroToUsDollarRecentRates() {
+	public @ResponseBody CurrencyConversionRateResponse findRecentCurrencyRates() {
 		return new CurrencyConversionRateResponse(
 				currencyCode + " to USD",
 				currencyConversionRateMapper.mapeEntitiesToDtos(currencyConversionService.findRecentCurrencyToUsDollarRates(10)));

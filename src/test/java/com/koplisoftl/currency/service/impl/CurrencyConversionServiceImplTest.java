@@ -1,14 +1,14 @@
 package com.koplisoftl.currency.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.time.LocalDate;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.assertj.core.util.Lists;
@@ -33,14 +33,13 @@ class CurrencyConversionServiceImplTest {
 	@Mock
 	private CurrencyConversionRateDao currencyRateDao;
 
-
 	@Test
 	void storeCurrencyToUsDollarRate() {
 		BigDecimal gbpToUsd = BigDecimal.valueOf(1.31);
 		CustomCurrencyPriceIndexResponse response = mock(CustomCurrencyPriceIndexResponse.class);
 		when(response.findCurrencyToUsDollarExchangeRate("GBP")).thenReturn(gbpToUsd);
-		Date now = Date.valueOf(LocalDate.now());
-		when(response.getDateTime()).thenReturn(now);
+		Date now = Timestamp.valueOf(LocalDateTime.now());
+		when(response.extractDateTime()).thenReturn(now);
 		when(restTemplate.getForObject("https://api.coindesk.com/v1/bpi/currentprice/GBP.json",
 				CustomCurrencyPriceIndexResponse.class)).thenReturn(response);
 		

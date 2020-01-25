@@ -1,7 +1,10 @@
-create table currency_rate
+create table CURRENCY_RATE
 (
-   id bigint not null auto_increment,
-   rate decimal(20,4) not null, 
-   time timestamp not null,
-   primary key(id)
+   ID bigint not null auto_increment,
+   RATE decimal(20,4) not null, 
+   TIME timestamp not null,
+   INSERT_TIME timestamp not null default current_timestamp,
+   primary key(ID)
 );
+
+create index IDX_INSERT_TIME on CURRENCY_RATE(INSERT_TIME);

@@ -14,17 +14,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CustomCurrencyPriceIndexResponse {
+	static final String US_DOLLAR = "USD";
 	@JsonProperty("time")
 	private CustomCurrencyTime time;
 	@JsonProperty("bpi")
 	private Map<String, CustomCurrencyBitcoinPriceIndex> bitcoinToCustomCurrency = new HashMap<>();
 	
-	public void setBitcoinToCustomCurrency(Map<String, CustomCurrencyBitcoinPriceIndex> bitcoinToCustomCurrency) {
+	public CustomCurrencyPriceIndexResponse() {
+		super();
+	}
+	
+	public CustomCurrencyPriceIndexResponse(CustomCurrencyTime time, Map<String, CustomCurrencyBitcoinPriceIndex> bitcoinToCustomCurrency) {
 		this.bitcoinToCustomCurrency = bitcoinToCustomCurrency;
+		this.time = time;
 	}
 
 	public BigDecimal findCurrencyToUsDollarExchangeRate(String currency) {
-		BigDecimal bitcoinToUsd = extractExchangeRate("USD");
+		BigDecimal bitcoinToUsd = extractExchangeRate(US_DOLLAR);
 		BigDecimal bitcoinToCurrency = extractExchangeRate(currency);
 		return bitcoinToUsd.divide(bitcoinToCurrency, 4, ROUND_HALF_UP);
 	}
@@ -35,7 +41,7 @@ public class CustomCurrencyPriceIndexResponse {
 				.orElseThrow(() -> new NoSuchElementException("No data available"));
 	}
 	
-	public Date getDateTime() {
+	public Date extractDateTime() {
 		return time.getDateTime();
 	}
 }
