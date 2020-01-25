@@ -1,5 +1,7 @@
 package com.koplisoftl.currency.dto;
 
+import static java.math.BigDecimal.ROUND_HALF_UP;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,9 +24,14 @@ public class CustomCurrencyPriceIndexResponse {
 	}
 
 	public BigDecimal findCurrencyToUsDollarExchangeRate(String currency) {
-		return Optional.ofNullable(bitcoinToCustomCurrency.get("USD"))
+		BigDecimal bitcoinToUsd = extractExchangeRate("USD");
+		BigDecimal bitcoinToCurrency = extractExchangeRate(currency);
+		return bitcoinToUsd.divide(bitcoinToCurrency, 4, ROUND_HALF_UP);
+	}
+	
+	private BigDecimal extractExchangeRate(String currency) {
+		return Optional.ofNullable(bitcoinToCustomCurrency.get(currency))
 				.map(CustomCurrencyBitcoinPriceIndex::getRate)
-				.map(rate -> BigDecimal.valueOf(rate / bitcoinToCustomCurrency.get(currency).getRate()))
 				.orElseThrow(() -> new NoSuchElementException("No data available"));
 	}
 	

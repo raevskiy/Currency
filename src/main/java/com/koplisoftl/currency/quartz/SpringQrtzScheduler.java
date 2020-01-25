@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Properties;
 
 import org.quartz.JobDetail;
-import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.quartz.spi.JobFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
