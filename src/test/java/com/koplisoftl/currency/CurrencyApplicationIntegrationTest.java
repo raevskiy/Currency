@@ -32,13 +32,13 @@ class CurrencyApplicationIntegrationTest {
     
     @Test
     void showsRecent() throws InterruptedException {
-    	Thread.sleep(10000);
+    	Thread.sleep(3000);
         ResponseEntity<CurrencyConversionRateResponse> response = restTemplate.exchange(
                 createURLWithPort("/recent"), HttpMethod.GET, null, CurrencyConversionRateResponse.class);
         
         CurrencyConversionRateResponse body = response.getBody();
     	assertThat(body.getDescription()).isEqualTo("GBP to USD");
-    	assertThat(body.getConversionRates()).hasSize(10);
+    	assertThat(body.getConversionRates()).hasSize(3);
     	assertThat(body.getConversionRates()).extracting(CurrencyConversionRate::getRate).allMatch(rate -> rate.compareTo(BigDecimal.ZERO) > 0);
     }
     

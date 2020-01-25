@@ -12,23 +12,26 @@ import com.koplisoftl.currency.service.CurrencyConversionService;
 
 @Controller
 public class MainController {
+	private static final String RECENT_PATH = "/recent";
 	@Autowired
 	private CurrencyConversionService currencyConversionService;
 	@Autowired
 	private CurrencyConversionRateMapper currencyConversionRateMapper;
 	@Value("${currencyToUsdRateCalculationJob.currency}")
 	private String currencyCode;
+	@Value("${currencyToUsdRateCalculationJob.recent.size}")
+	private int recentSize;
 	
 	@GetMapping
 	public @ResponseBody String showHint() {
-		return "Shows currency exchange rate at /recent";
+		return "Shows currency exchange rate at " + RECENT_PATH;
 	}
 
-	@GetMapping(path = "/recent")
+	@GetMapping(path = RECENT_PATH)
 	public @ResponseBody CurrencyConversionRateResponse findRecentCurrencyRates() {
 		return new CurrencyConversionRateResponse(
 				currencyCode + " to USD",
-				currencyConversionRateMapper.mapeEntitiesToDtos(currencyConversionService.findRecentCurrencyToUsDollarRates(10)));
+				currencyConversionRateMapper.mapeEntitiesToDtos(currencyConversionService.findRecentCurrencyToUsDollarRates(recentSize)));
 	}
 
 }

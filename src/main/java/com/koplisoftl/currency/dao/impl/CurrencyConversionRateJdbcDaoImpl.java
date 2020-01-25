@@ -14,9 +14,6 @@ import com.koplisoftl.currency.entity.CurrencyConversionRate;
 
 @Repository
 public class CurrencyConversionRateJdbcDaoImpl implements CurrencyConversionRateDao {
-	static final String SELECT_RECENT = "select * from CURRENCY_RATE order by INSERT_TIME desc limit ?";
-	static final String INSERT = "insert into CURRENCY_RATE (RATE, TIME) values(?, ?)";
-	
 	class CurrencyRateRowMapper implements RowMapper<CurrencyConversionRate> {
         @Override
         public CurrencyConversionRate mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -27,6 +24,9 @@ public class CurrencyConversionRateJdbcDaoImpl implements CurrencyConversionRate
             return currencyRate;
         }
     }
+	
+	static final String SELECT_RECENT = "select * from CURRENCY_RATE order by INSERT_TIME desc limit ?";
+	static final String INSERT = "insert into CURRENCY_RATE (RATE, TIME) values(?, ?)";
 	
 	@Autowired
     private JdbcTemplate jdbcTemplate;
