@@ -9,6 +9,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.koplisoftl.currency.dto.CurrencyConversionRateResponse;
@@ -39,6 +41,16 @@ class MainControllerTest {
 		assertThat(response.getDescription()).isEqualTo("GBP to USD");
 		verify(currencyConversionService).findRecentCurrencyToUsDollarRates(5);
 		verify(currencyConversionRateMapper).mapeEntitiesToDtos(Mockito.anyList());
+	}
+	
+	@Test
+	void handlesExceptions() {
+		RuntimeException exception = new RuntimeException();
+		
+		ResponseEntity<Exception> responseEntity = controller.handleAllExceptions(exception);
+		
+		assertThat(responseEntity.getBody()).isEqualTo(exception);
+		assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
 }

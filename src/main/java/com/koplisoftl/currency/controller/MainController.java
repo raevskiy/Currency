@@ -2,7 +2,10 @@ package com.koplisoftl.currency.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -33,5 +36,9 @@ public class MainController {
 				currencyCode + " to USD",
 				currencyConversionRateMapper.mapeEntitiesToDtos(currencyConversionService.findRecentCurrencyToUsDollarRates(recentSize)));
 	}
-
+	
+	@ExceptionHandler(RuntimeException.class)
+	public ResponseEntity<Exception> handleAllExceptions(RuntimeException ex) {
+	    return new ResponseEntity<Exception>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 }
