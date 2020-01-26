@@ -1,6 +1,6 @@
-package com.koplisoftl.currency.dto;
+package com.coindesk.api.dto;
 
-import static com.koplisoftl.currency.dto.CustomCurrencyPriceIndexResponse.US_DOLLAR;
+import static com.coindesk.api.dto.CustomCurrencyPriceIndexResponse.US_DOLLAR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
@@ -14,6 +14,10 @@ import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.Test;
 
+import com.coindesk.api.dto.CustomCurrencyBitcoinPriceIndex;
+import com.coindesk.api.dto.CustomCurrencyPriceIndexResponse;
+import com.coindesk.api.dto.CustomCurrencyTime;
+
 class CustomCurrencyPriceIndexResponseTest {
 	private static final String GB_POUND = "GBP";
 
@@ -23,8 +27,8 @@ class CustomCurrencyPriceIndexResponseTest {
 		bitcoinToCustomCurrency.put(US_DOLLAR, new CustomCurrencyBitcoinPriceIndex(BigDecimal.TEN));
 		bitcoinToCustomCurrency.put(GB_POUND, new CustomCurrencyBitcoinPriceIndex(BigDecimal.valueOf(5)));
 
-		assertThat(createResponse(bitcoinToCustomCurrency).findCurrencyToUsDollarExchangeRate(GB_POUND).compareTo(BigDecimal.valueOf(2)))
-				.isEqualTo(0);
+		assertThat(createResponse(bitcoinToCustomCurrency).findCurrencyToUsDollarExchangeRate(GB_POUND))
+				.isEqualByComparingTo(BigDecimal.valueOf(2));
 	}
 
 	@Test

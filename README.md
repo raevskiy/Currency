@@ -1,1 +1,1 @@
-# Currency
+# Currency Conversion Application, a test task

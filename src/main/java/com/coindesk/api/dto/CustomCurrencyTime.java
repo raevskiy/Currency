@@ -1,4 +1,4 @@
-package com.koplisoftl.currency.dto;
+package com.coindesk.api.dto;
 
 import java.util.Date;
 

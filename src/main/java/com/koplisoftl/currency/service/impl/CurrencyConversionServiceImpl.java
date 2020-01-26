@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.coindesk.api.dto.CustomCurrencyPriceIndexResponse;
 import com.koplisoftl.currency.dao.CurrencyConversionRateDao;
-import com.koplisoftl.currency.dto.CustomCurrencyPriceIndexResponse;
 import com.koplisoftl.currency.entity.CurrencyConversionRate;
 import com.koplisoftl.currency.service.CurrencyConversionService;
 
@@ -34,6 +34,4 @@ public class CurrencyConversionServiceImpl implements CurrencyConversionService 
 	public List<CurrencyConversionRate> findRecentCurrencyToUsDollarRates(int size) {
 		return currencyRateDao.findRecent(size);
 	}
-
-
 }

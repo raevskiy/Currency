@@ -1,5 +1,7 @@
 package com.koplisoftl.currency.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -15,7 +17,10 @@ import com.koplisoftl.currency.service.CurrencyConversionService;
 
 @Controller
 public class MainController {
-	private static final String RECENT_PATH = "/recent";
+	static final String RECENT_PATH = "/recent";
+	static final String HINT = "Shows currency exchange rate at " + RECENT_PATH;
+	static final String INTERNAL_ERROR = "Internal Server Error. We are fixing it right now";
+	
 	@Autowired
 	private CurrencyConversionService currencyConversionService;
 	@Autowired
@@ -27,7 +32,7 @@ public class MainController {
 	
 	@GetMapping
 	public @ResponseBody String showHint() {
-		return "Shows currency exchange rate at " + RECENT_PATH;
+		return HINT;
 	}
 
 	@GetMapping(path = RECENT_PATH)
@@ -38,7 +43,9 @@ public class MainController {
 	}
 	
 	@ExceptionHandler(RuntimeException.class)
-	public ResponseEntity<Exception> handleAllExceptions(RuntimeException ex) {
-	    return new ResponseEntity<Exception>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+	public ResponseEntity<String> handleAllExceptions(RuntimeException exception) {
+	    return new ResponseEntity<String>(
+	    		Optional.ofNullable(exception.getMessage()).orElse(INTERNAL_ERROR),
+	    		HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }

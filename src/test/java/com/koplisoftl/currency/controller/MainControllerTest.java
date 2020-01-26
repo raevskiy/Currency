@@ -1,5 +1,6 @@
 package com.koplisoftl.currency.controller;
 
+import static com.koplisoftl.currency.controller.MainController.HINT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 
@@ -28,7 +29,7 @@ class MainControllerTest {
 
 	@Test
 	void showHint() {
-		assertThat(controller.showHint()).isEqualTo("Shows currency exchange rate at /recent");
+		assertThat(controller.showHint()).isEqualTo(HINT);
 	}
 
 	@Test
@@ -44,13 +45,22 @@ class MainControllerTest {
 	}
 	
 	@Test
-	void handlesExceptions() {
-		RuntimeException exception = new RuntimeException();
+	void handlesExceptionsWithMessage() {
+		RuntimeException exception = new RuntimeException("Trololo");
 		
-		ResponseEntity<Exception> responseEntity = controller.handleAllExceptions(exception);
+		ResponseEntity<String> responseEntity = controller.handleAllExceptions(exception);
 		
-		assertThat(responseEntity.getBody()).isEqualTo(exception);
+		assertThat(responseEntity.getBody()).isEqualTo(exception.getMessage());
 		assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-
+	
+	@Test
+	void handlesExceptionsWithoutMessage() {
+		RuntimeException exception = new RuntimeException();
+		
+		ResponseEntity<String> responseEntity = controller.handleAllExceptions(exception);
+		
+		assertThat(responseEntity.getBody()).isEqualTo(MainController.INTERNAL_ERROR);
+		assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 }

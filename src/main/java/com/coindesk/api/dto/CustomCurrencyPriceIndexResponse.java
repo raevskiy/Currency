@@ -1,4 +1,4 @@
-package com.koplisoftl.currency.dto;
+package com.coindesk.api.dto;
 
 import static java.math.BigDecimal.ROUND_HALF_UP;
 

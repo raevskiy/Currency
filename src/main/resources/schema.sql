@@ -1,3 +1,5 @@
+drop table if exists CURRENCY_RATE;
+
 create table CURRENCY_RATE
 (
    ID bigint not null auto_increment,

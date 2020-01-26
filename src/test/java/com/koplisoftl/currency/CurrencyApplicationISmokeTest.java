@@ -10,6 +10,8 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.TestPropertySource;
 
 import com.koplisoftl.currency.dto.CurrencyConversionRate;
@@ -17,7 +19,8 @@ import com.koplisoftl.currency.dto.CurrencyConversionRateResponse;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations="classpath:test.properties")
-class CurrencyApplicationIntegrationTest {
+@DirtiesContext(classMode = ClassMode.AFTER_CLASS)
+class CurrencyApplicationISmokeTest {
 	@LocalServerPort
     private int port;
     private TestRestTemplate restTemplate = new TestRestTemplate();

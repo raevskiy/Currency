@@ -20,8 +20,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.RestTemplate;
 
+import com.coindesk.api.dto.CustomCurrencyPriceIndexResponse;
 import com.koplisoftl.currency.dao.CurrencyConversionRateDao;
-import com.koplisoftl.currency.dto.CustomCurrencyPriceIndexResponse;
 import com.koplisoftl.currency.entity.CurrencyConversionRate;
 
 @ExtendWith(MockitoExtension.class)
