@@ -3,15 +3,15 @@ package com.koplisoftl.currency.dto;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class CurrencyConversionRate {
+public class CurrencyConversionRateDto {
 	private BigDecimal rate;
 	private Date dateTime;
 	
-	public CurrencyConversionRate() {
+	public CurrencyConversionRateDto() {
 		super();
 	}
 	
-	public CurrencyConversionRate(BigDecimal rate, Date dateTime) {
+	public CurrencyConversionRateDto(BigDecimal rate, Date dateTime) {
 		this.rate = rate;
 		this.dateTime = dateTime;
 	}

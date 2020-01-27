@@ -4,10 +4,11 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 
-import com.koplisoftl.currency.dto.CurrencyConversionRate;
+import com.koplisoftl.currency.dto.CurrencyConversionRateDto;
+import com.koplisoftl.currency.entity.CurrencyConversionRate;
 
 @Mapper(componentModel = "spring")
 public interface CurrencyConversionRateMapper {
-	CurrencyConversionRate mapEntityToDto(com.koplisoftl.currency.entity.CurrencyConversionRate currencyConversionRate);
-	List<CurrencyConversionRate> mapeEntitiesToDtos(List<com.koplisoftl.currency.entity.CurrencyConversionRate> currencyConversionRate);
+	CurrencyConversionRateDto mapEntityToDto(CurrencyConversionRate currencyConversionRate);
+	List<CurrencyConversionRateDto> mapEntitiesToDtos(List<CurrencyConversionRate> currencyConversionRates);
 }

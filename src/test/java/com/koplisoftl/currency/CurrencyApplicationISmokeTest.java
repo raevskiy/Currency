@@ -14,8 +14,8 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.TestPropertySource;
 
-import com.koplisoftl.currency.dto.CurrencyConversionRate;
-import com.koplisoftl.currency.dto.CurrencyConversionRateResponse;
+import com.koplisoftl.currency.dto.CurrencyConversionRateDto;
+import com.koplisoftl.currency.dto.CurrencyConversionRateResponseDto;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(locations="classpath:test.properties")
@@ -36,13 +36,13 @@ class CurrencyApplicationISmokeTest {
     @Test
     void showsRecent() throws InterruptedException {
     	Thread.sleep(3000);
-        ResponseEntity<CurrencyConversionRateResponse> response = restTemplate.exchange(
-                createURLWithPort("/recent"), HttpMethod.GET, null, CurrencyConversionRateResponse.class);
+        ResponseEntity<CurrencyConversionRateResponseDto> response = restTemplate.exchange(
+                createURLWithPort("/recent"), HttpMethod.GET, null, CurrencyConversionRateResponseDto.class);
         
-        CurrencyConversionRateResponse body = response.getBody();
+        CurrencyConversionRateResponseDto body = response.getBody();
     	assertThat(body.getDescription()).isEqualTo("GBP to USD");
     	assertThat(body.getConversionRates()).hasSize(3);
-    	assertThat(body.getConversionRates()).extracting(CurrencyConversionRate::getRate).allMatch(rate -> rate.compareTo(BigDecimal.ZERO) > 0);
+    	assertThat(body.getConversionRates()).extracting(CurrencyConversionRateDto::getRate).allMatch(rate -> rate.compareTo(BigDecimal.ZERO) > 0);
     }
     
     private String createURLWithPort(String uri) {

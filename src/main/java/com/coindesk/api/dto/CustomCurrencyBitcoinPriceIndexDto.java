@@ -6,15 +6,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CustomCurrencyBitcoinPriceIndex {
+public class CustomCurrencyBitcoinPriceIndexDto {
 	@JsonProperty("rate_float")
 	private BigDecimal rate;
 	
-	public CustomCurrencyBitcoinPriceIndex() {
+	public CustomCurrencyBitcoinPriceIndexDto() {
 		super();
 	}
 	
-	public CustomCurrencyBitcoinPriceIndex(BigDecimal rate) {
+	public CustomCurrencyBitcoinPriceIndexDto(BigDecimal rate) {
 		this.rate = rate;
 	}
 	

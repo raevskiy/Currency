@@ -20,7 +20,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.RestTemplate;
 
-import com.coindesk.api.dto.CustomCurrencyPriceIndexResponse;
+import com.coindesk.api.dto.CustomCurrencyPriceIndexResponseDto;
 import com.koplisoftl.currency.dao.CurrencyConversionRateDao;
 import com.koplisoftl.currency.entity.CurrencyConversionRate;
 
@@ -36,12 +36,12 @@ class CurrencyConversionServiceImplTest {
 	@Test
 	void storeCurrencyToUsDollarRate() {
 		BigDecimal gbpToUsd = BigDecimal.valueOf(1.31);
-		CustomCurrencyPriceIndexResponse response = mock(CustomCurrencyPriceIndexResponse.class);
+		CustomCurrencyPriceIndexResponseDto response = mock(CustomCurrencyPriceIndexResponseDto.class);
 		when(response.findCurrencyToUsDollarExchangeRate("GBP")).thenReturn(gbpToUsd);
 		Date now = Timestamp.valueOf(LocalDateTime.now());
 		when(response.extractDateTime()).thenReturn(now);
 		when(restTemplate.getForObject("https://api.coindesk.com/v1/bpi/currentprice/GBP.json",
-				CustomCurrencyPriceIndexResponse.class)).thenReturn(response);
+				CustomCurrencyPriceIndexResponseDto.class)).thenReturn(response);
 		
 		service.storeCurrencyToUsDollarRate("GBP");
 		

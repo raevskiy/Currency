@@ -1,6 +1,5 @@
 package com.coindesk.api.dto;
 
-import static com.coindesk.api.dto.CustomCurrencyPriceIndexResponse.US_DOLLAR;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
@@ -14,18 +13,15 @@ import java.util.NoSuchElementException;
 
 import org.junit.jupiter.api.Test;
 
-import com.coindesk.api.dto.CustomCurrencyBitcoinPriceIndex;
-import com.coindesk.api.dto.CustomCurrencyPriceIndexResponse;
-import com.coindesk.api.dto.CustomCurrencyTime;
-
-class CustomCurrencyPriceIndexResponseTest {
+class CustomCurrencyPriceIndexResponseDtoTest {
+	private static final String US_DOLLAR = "USD";
 	private static final String GB_POUND = "GBP";
 
 	@Test
 	void findsCurrencyToUsDollarExchangeRate() {
-		Map<String, CustomCurrencyBitcoinPriceIndex> bitcoinToCustomCurrency = new HashMap<>();
-		bitcoinToCustomCurrency.put(US_DOLLAR, new CustomCurrencyBitcoinPriceIndex(BigDecimal.TEN));
-		bitcoinToCustomCurrency.put(GB_POUND, new CustomCurrencyBitcoinPriceIndex(BigDecimal.valueOf(5)));
+		Map<String, CustomCurrencyBitcoinPriceIndexDto> bitcoinToCustomCurrency = new HashMap<>();
+		bitcoinToCustomCurrency.put(US_DOLLAR, new CustomCurrencyBitcoinPriceIndexDto(BigDecimal.TEN));
+		bitcoinToCustomCurrency.put(GB_POUND, new CustomCurrencyBitcoinPriceIndexDto(BigDecimal.valueOf(5)));
 
 		assertThat(createResponse(bitcoinToCustomCurrency).findCurrencyToUsDollarExchangeRate(GB_POUND))
 				.isEqualByComparingTo(BigDecimal.valueOf(2));
@@ -48,21 +44,21 @@ class CustomCurrencyPriceIndexResponseTest {
 	@Test
 	void extractsDateTime() {
 		Date now = Timestamp.valueOf(LocalDateTime.now());
-		CustomCurrencyPriceIndexResponse response = new CustomCurrencyPriceIndexResponse(
-				new CustomCurrencyTime(now),
+		CustomCurrencyPriceIndexResponseDto response = new CustomCurrencyPriceIndexResponseDto(
+				new CustomCurrencyTimeDto(now),
 				new HashMap<>());
 		
 		assertThat(response.extractDateTime()).isEqualTo(now);
 	}
 
-	private CustomCurrencyPriceIndexResponse createResponse(
-			Map<String, CustomCurrencyBitcoinPriceIndex> bitcoinToCustomCurrency) {
-		return new CustomCurrencyPriceIndexResponse(new CustomCurrencyTime(), bitcoinToCustomCurrency);
+	private CustomCurrencyPriceIndexResponseDto createResponse(
+			Map<String, CustomCurrencyBitcoinPriceIndexDto> bitcoinToCustomCurrency) {
+		return new CustomCurrencyPriceIndexResponseDto(new CustomCurrencyTimeDto(), bitcoinToCustomCurrency);
 	}
 	
-	private CustomCurrencyPriceIndexResponse createInvalidResponse(String currencyCode) {
-		Map<String, CustomCurrencyBitcoinPriceIndex> bitcoinToCustomCurrency = new HashMap<>();
-		bitcoinToCustomCurrency.put(currencyCode, new CustomCurrencyBitcoinPriceIndex(BigDecimal.valueOf(5)));
+	private CustomCurrencyPriceIndexResponseDto createInvalidResponse(String currencyCode) {
+		Map<String, CustomCurrencyBitcoinPriceIndexDto> bitcoinToCustomCurrency = new HashMap<>();
+		bitcoinToCustomCurrency.put(currencyCode, new CustomCurrencyBitcoinPriceIndexDto(BigDecimal.valueOf(5)));
 		return createResponse(bitcoinToCustomCurrency);
 	}
 }

@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.koplisoftl.currency.dto.CurrencyConversionRateResponse;
+import com.koplisoftl.currency.dto.CurrencyConversionRateResponseDto;
 import com.koplisoftl.currency.mappimg.CurrencyConversionRateMapper;
 import com.koplisoftl.currency.service.CurrencyConversionService;
 
 @Controller
 public class MainController {
-	static final String RECENT_PATH = "/recent";
-	static final String HINT = "Shows currency exchange rate at " + RECENT_PATH;
-	static final String INTERNAL_ERROR = "Internal Server Error. We are fixing it right now";
+	private static final String RECENT_PATH = "/recent";
+	private static final String HINT = "Shows currency exchange rate at " + RECENT_PATH;
+	private static final String INTERNAL_ERROR = "Internal Server Error. We are fixing it right now";
 	
 	@Autowired
 	private CurrencyConversionService currencyConversionService;
@@ -36,10 +36,10 @@ public class MainController {
 	}
 
 	@GetMapping(path = RECENT_PATH)
-	public @ResponseBody CurrencyConversionRateResponse findRecentCurrencyRates() {
-		return new CurrencyConversionRateResponse(
+	public @ResponseBody CurrencyConversionRateResponseDto findRecentCurrencyRates() {
+		return new CurrencyConversionRateResponseDto(
 				currencyCode + " to USD",
-				currencyConversionRateMapper.mapeEntitiesToDtos(currencyConversionService.findRecentCurrencyToUsDollarRates(recentSize)));
+				currencyConversionRateMapper.mapEntitiesToDtos(currencyConversionService.findRecentCurrencyToUsDollarRates(recentSize)));
 	}
 	
 	@ExceptionHandler(RuntimeException.class)

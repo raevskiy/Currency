@@ -1,4 +1,4 @@
-package com.koplisoftl.currency.quartz;
+package com.koplisoftl.currency.configuration;
 
 import static org.quartz.SimpleTrigger.REPEAT_INDEFINITELY;
 
@@ -18,6 +18,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.JobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
+
+import com.koplisoftl.currency.quartz.CurrencyToUsDollarRateCalculationJob;
  
 @Configuration
 public class SpringQrtzScheduler {

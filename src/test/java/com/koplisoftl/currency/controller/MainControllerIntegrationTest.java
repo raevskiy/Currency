@@ -19,7 +19,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.koplisoftl.currency.dto.CurrencyConversionRate;
+import com.koplisoftl.currency.dto.CurrencyConversionRateDto;
 import com.koplisoftl.currency.mappimg.CurrencyConversionRateMapper;
 import com.koplisoftl.currency.service.CurrencyConversionService;
 
@@ -36,15 +36,15 @@ class MainControllerIntegrationTest {
 	void showsHint() throws Exception {
 		mockMvc.perform(get("")).andDo(print())
 				.andExpect(status().isOk())
-				.andExpect(content().string(equalToObject(MainController.HINT)));
+				.andExpect(content().string(equalToObject("Shows currency exchange rate at /recent")));
 	}
 
 	@Test
 	void findsRecentCurrencyRates() throws Exception {
-		when(currencyConversionRateMapper.mapeEntitiesToDtos(Mockito.anyList())).thenReturn(
-				newArrayList(new CurrencyConversionRate(BigDecimal.TEN, Timestamp.valueOf("2020-01-26 15:43:00"))));
+		when(currencyConversionRateMapper.mapEntitiesToDtos(Mockito.anyList())).thenReturn(
+				newArrayList(new CurrencyConversionRateDto(BigDecimal.TEN, Timestamp.valueOf("2020-01-26 15:43:00"))));
 
-		mockMvc.perform(get(MainController.RECENT_PATH)).andDo(print())
+		mockMvc.perform(get("/recent")).andDo(print())
 				.andExpect(status().isOk())
 				.andExpect(content().string(equalToObject(
 						"{\"description\":\"EUR to USD\",\"conversionRates\":[{\"rate\":10,\"dateTime\":\"2020-01-26T13:43:00.000+0000\"}]}")));
@@ -53,9 +53,9 @@ class MainControllerIntegrationTest {
 	@Test
 	void handlesInternalError() throws Exception {
 		RuntimeException exception = new RuntimeException("Something went terribly wrong");
-		when(currencyConversionRateMapper.mapeEntitiesToDtos(Mockito.anyList())).thenThrow(exception);
+		when(currencyConversionRateMapper.mapEntitiesToDtos(Mockito.anyList())).thenThrow(exception);
 
-		mockMvc.perform(get(MainController.RECENT_PATH)).andDo(print())
+		mockMvc.perform(get("/recent")).andDo(print())
 				.andExpect(status().is5xxServerError())
 				.andExpect(content().string(containsString(exception.getMessage())));
 	}

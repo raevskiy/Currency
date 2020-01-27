@@ -6,15 +6,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CustomCurrencyTime {
+public class CustomCurrencyTimeDto {
 	@JsonProperty("updatedISO")
 	private Date dateTime;
 	
-	public CustomCurrencyTime() {
+	public CustomCurrencyTimeDto() {
 		super();
 	}
 	
-	public CustomCurrencyTime(Date dateTime) {
+	public CustomCurrencyTimeDto(Date dateTime) {
 		this.dateTime = dateTime;
 	}
 	

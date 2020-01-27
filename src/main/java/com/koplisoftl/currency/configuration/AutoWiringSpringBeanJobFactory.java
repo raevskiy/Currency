@@ -1,4 +1,4 @@
-package com.koplisoftl.currency.quartz;
+package com.koplisoftl.currency.configuration;
 
 import org.quartz.spi.TriggerFiredBundle;
 import org.springframework.beans.BeansException;
@@ -9,7 +9,7 @@ import org.springframework.scheduling.quartz.SpringBeanJobFactory;
 
 class AutoWiringSpringBeanJobFactory extends SpringBeanJobFactory implements ApplicationContextAware {
 
-    private transient AutowireCapableBeanFactory beanFactory;
+    private AutowireCapableBeanFactory beanFactory;
 
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         beanFactory = applicationContext.getAutowireCapableBeanFactory();

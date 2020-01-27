@@ -3,6 +3,8 @@ package com.coindesk.api.dto;
 import static java.math.BigDecimal.ROUND_HALF_UP;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,18 +15,18 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class CustomCurrencyPriceIndexResponse {
-	static final String US_DOLLAR = "USD";
+public class CustomCurrencyPriceIndexResponseDto {
+	private static final String US_DOLLAR = "USD";
 	@JsonProperty("time")
-	private CustomCurrencyTime time;
+	private CustomCurrencyTimeDto time;
 	@JsonProperty("bpi")
-	private Map<String, CustomCurrencyBitcoinPriceIndex> bitcoinToCustomCurrency = new HashMap<>();
+	private Map<String, CustomCurrencyBitcoinPriceIndexDto> bitcoinToCustomCurrency = new HashMap<>();
 	
-	public CustomCurrencyPriceIndexResponse() {
+	public CustomCurrencyPriceIndexResponseDto() {
 		super();
 	}
 	
-	public CustomCurrencyPriceIndexResponse(CustomCurrencyTime time, Map<String, CustomCurrencyBitcoinPriceIndex> bitcoinToCustomCurrency) {
+	public CustomCurrencyPriceIndexResponseDto(CustomCurrencyTimeDto time, Map<String, CustomCurrencyBitcoinPriceIndexDto> bitcoinToCustomCurrency) {
 		this.bitcoinToCustomCurrency = bitcoinToCustomCurrency;
 		this.time = time;
 	}
@@ -37,11 +39,13 @@ public class CustomCurrencyPriceIndexResponse {
 	
 	private BigDecimal extractExchangeRate(String currency) {
 		return Optional.ofNullable(bitcoinToCustomCurrency.get(currency))
-				.map(CustomCurrencyBitcoinPriceIndex::getRate)
+				.map(CustomCurrencyBitcoinPriceIndexDto::getRate)
 				.orElseThrow(() -> new NoSuchElementException("No data available"));
 	}
 	
 	public Date extractDateTime() {
-		return time.getDateTime();
+		return Optional.ofNullable(time)
+				.map(CustomCurrencyTimeDto::getDateTime)
+				.orElse(Timestamp.valueOf(LocalDateTime.now()));
 	}
 }

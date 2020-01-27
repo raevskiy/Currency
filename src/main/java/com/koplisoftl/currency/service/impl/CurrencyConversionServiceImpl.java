@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.coindesk.api.dto.CustomCurrencyPriceIndexResponse;
+import com.coindesk.api.dto.CustomCurrencyPriceIndexResponseDto;
 import com.koplisoftl.currency.dao.CurrencyConversionRateDao;
 import com.koplisoftl.currency.entity.CurrencyConversionRate;
 import com.koplisoftl.currency.service.CurrencyConversionService;
@@ -23,8 +23,8 @@ public class CurrencyConversionServiceImpl implements CurrencyConversionService 
 
 	@Override
 	public void storeCurrencyToUsDollarRate(String currency) {
-		CustomCurrencyPriceIndexResponse response = restTemplate.getForObject(
-				String.format(CUSTOM_CURRENCY_PRICE_INDEX_URL, currency), CustomCurrencyPriceIndexResponse.class);
+		CustomCurrencyPriceIndexResponseDto response = restTemplate.getForObject(
+				String.format(CUSTOM_CURRENCY_PRICE_INDEX_URL, currency), CustomCurrencyPriceIndexResponseDto.class);
 		CurrencyConversionRate currencyRate = new CurrencyConversionRate(
 				response.findCurrencyToUsDollarExchangeRate(currency), response.extractDateTime());
 		currencyRateDao.insert(currencyRate);
